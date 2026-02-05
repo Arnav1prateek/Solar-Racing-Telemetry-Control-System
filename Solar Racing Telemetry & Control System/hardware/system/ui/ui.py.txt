@@ -1,0 +1,70 @@
+ui code
+
+```import streamlit as st
+import requests
+import pandas as pd
+import time
+
+# Flask server URL (your Raspberry Pi's server IP)
+SERVER_URL = "http://localhost:5000/data"  # Use localhost for same Pi
+
+# Streamlit UI Configuration
+st.set_page_config(
+    page_title="Real-Time Sensor Dashboard",
+    layout="wide"
+)
+
+st.title("Real-Time Sensor Dashboard")
+st.markdown("### Live Data and Graphs")
+
+# Initialize data storage
+data = []
+
+# Layout: Two columns
+col1, col2 = st.columns(2)
+
+# Function to fetch data
+def fetch_data():
+    try:
+        response = requests.get(SERVER_URL)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            st.error(f"Failed to fetch data: {response.status_code}")
+            return []
+    except Exception as e:
+        st.error(f"Error: {e}")
+        return []
+
+# Display values
+sensor_values = col1.empty()
+graph_area = col2.empty()
+
+# Real-time loop
+while True:
+    new_data = fetch_data()
+
+    if new_data:
+        # Update local data
+        data = new_data[-50:]  # Store the latest 50 values only
+
+        # Display live values
+        latest = data[-1]
+        sensor_values.markdown(
+            f"""
+            ### ??? Latest Sensor Readings:
+            - **MQ2 Gas Level:** {latest['MQ2']}
+            - **Distance:** {latest['Distance']} cm
+            - **Humidity:** {latest['Humidity']} %
+            - **Temperature:** {latest['TempC']} C / {latest['TempF']} F
+            - **Heat Index:** {latest['HeatIndexC']} C / {latest['HeatIndexF']} F
+            """
+        )
+
+        # Convert to DataFrame for plotting
+        df = pd.DataFrame(data)
+
+        # Create graph
+        graph_area.line_chart(df.set_index("timestamp")[["MQ2", "Distance", "Humidity", "TempC", "HeatIndexC"]])
+
+    time.sleep(2)  # Refresh every 2 seconds ```
