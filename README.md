@@ -34,6 +34,21 @@ Run the System Execute the orchestrator script to start the GPS listener, map ge
 Bash
 python3 main.py
 
+### GPIO Pin Mapping
+
+The project utilizes the **BCM (Broadcom)** numbering system. Ensure your sensors and buttons are connected to the following pins:
+
+| Component | GPIO Pin (BCM) | Physical Pin | Mode | Description |
+| :--- | :---: | :---: | :---: | :--- |
+| **Buzzer** | 24 | Pin 18 | Output | [cite_start]System alerts & button feedback [cite: 2, 33] |
+| **Rear Park Button** | 17 | Pin 11 | Input (Pull-up) | [cite_start]Toggles Rear Parking Assist script [cite: 2, 33] |
+| **Front Park Button** | 27 | Pin 13 | Input (Pull-up) | [cite_start]Toggles Server and Dashboard UI [cite: 2, 33] |
+| **Object Detect Button**| 22 | Pin 15 | Input (Pull-up) | [cite_start]Toggles Object Detection script [cite: 2, 33] |
+| **Ultrasonic TRIG** | 23 | Pin 16 | Output | Trigger for Parking Assist distance |
+| **Ultrasonic ECHO** | 24* | Pin 18* | Input | Echo for Parking Assist distance |
+
+> **?? [cite_start]Note on Hardware Conflict:** In the current configuration, both the **Buzzer** and the **Ultrasonic ECHO** are assigned to GPIO 24[cite: 2, 33]. For stable operation, it is recommended to move one to a different pin (e.g., GPIO 25) and update the code accordingly.
+
 ## Project Structure
 ```text
 .
