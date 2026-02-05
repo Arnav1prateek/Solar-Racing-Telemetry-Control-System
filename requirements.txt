@@ -1,0 +1,6 @@
+flask
+streamlit
+folium
+requests
+pandas
+RPi.GPIO
