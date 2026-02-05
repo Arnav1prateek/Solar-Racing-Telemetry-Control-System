@@ -14,19 +14,6 @@ It is a custom hardware-software integration stack designed for real-time monito
 - **Libraries**: Folium (Mapping), Pandas (Data), RPi.GPIO (Hardware)
 - **Hardware**: Raspberry Pi, GPS Module, MQ2 Sensor, Ultrasonic Sensors.
 
-## Project Structure
-```text
-.
-├── main.py                 # Core orchestrator and thread manager
-├── car_map.html            # Auto-generated live map file
-├── system/
-│   ├── rear_parking.py     # Independent parking assist logic
-│   ├── server/
-│   │   └── server.py       # Flask backend for sensor data
-│   └── ui/
-│       └── ui.py           # Streamlit frontend dashboard
-└── requirements.txt        # Project dependencies
-
 ## Setup & Installation
 
 Follow these steps to deploy the system on your Raspberry Pi:
@@ -46,3 +33,16 @@ Run the System Execute the orchestrator script to start the GPS listener, map ge
 
 Bash
 python3 main.py
+
+## Project Structure
+```text
+.
+├── main.py                 # Core orchestrator and thread manager
+├── car_map.html            # Auto-generated live map file
+├── system/
+│   ├── rear_parking.py     # Independent parking assist logic
+│   ├── server/
+│   │   └── server.py       # Flask backend for sensor data
+│   └── ui/
+│       └── ui.py           # Streamlit frontend dashboard
+└── requirements.txt        # Project dependencies
